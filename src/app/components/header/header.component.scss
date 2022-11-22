@@ -1,0 +1,17 @@
+.navbar-expand-lg .navbar-collapse 
+{
+    justify-content: flex-end;
+}
+
+.navbar
+{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.brand-icon
+{
+    width: 60px;
+}
