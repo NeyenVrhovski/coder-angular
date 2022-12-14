@@ -1,16 +1,10 @@
 <div class="home-main-container">
-    <ng-container *ngFor="let student of students">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">{{student.firstname}} {{student.lastname}}</h5>
-              <p class="card-text">{{student.grade}}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Documento: <strong>{{student.document}}</strong></li>
-              <li class="list-group-item">Fecha de admision: <strong>{{student.admissionDate}}</strong></li>
-              <li class="list-group-item">Nota Final: <span class="student-note" [ngStyle]="{'color': student.note >= 7 ? 'green' : 'red'}">{{student.note}}</span></li>
-              <li class="list-group-item">Deuda: <strong>{{student.debt | currency: 'USD'}}</strong></li>
-            </ul>
-        </div>
+  <button *ngIf="showForm == false" (click)="showForm = true" class="add-button">Agregar nuevo alumno</button>
+  <button *ngIf="showForm == true" (click)="showForm = false" class="add-button return">Volver</button>
+    <ng-container *ngIf="showForm">
+      <app-form></app-form>
+    </ng-container>
+    <ng-container *ngIf="!showForm">
+      <app-students></app-students>
     </ng-container>
 </div>

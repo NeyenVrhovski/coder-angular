@@ -1,0 +1,33 @@
+.students-main-container
+{
+    width: 100%;
+    height: auto;
+    background-color: rgba(255, 255, 255, 0.75);
+    padding: 86px 0 0 12%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+    .card
+    {
+        height: 300px;
+        margin: 10px 14px;
+        .card-body
+        {
+            .card-title
+            {
+                font-weight: 700;
+                color: rgb(185, 13, 243);
+                cursor: pointer;
+            }
+            .card-text
+            {
+                color: gray
+            }
+        }
+        .student-note
+        {
+            font-weight: 700;
+        }
+    }
+}

@@ -19,9 +19,12 @@ export class FormComponent implements OnInit {
     carrera: boolean
   }
 
+  loading: boolean
+
   constructor(
     private fb: FormBuilder
   ) { 
+    this.loading = false
     this.form = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -50,12 +53,16 @@ export class FormComponent implements OnInit {
   {
     if(this.form.valid)
     {
-      Swal.fire({
-        title: 'Informacion Enviada!',
-        text: 'Ya recibimos tus datos, nos comunicaremos con vos a la brevedad',
-        icon: 'success',
-        confirmButtonText: 'Cerrar'
-      })
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        Swal.fire({
+          title: 'Informacion Enviada!',
+          text: 'Ya recibimos tus datos, nos comunicaremos con vos a la brevedad',
+          icon: 'success',
+          confirmButtonText: 'Cerrar'
+        })
+      },2000)
     }
     else
     {

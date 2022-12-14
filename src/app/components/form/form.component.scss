@@ -5,7 +5,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 86px 0 0 12%;
     form
     {
         width: auto;
@@ -36,6 +35,14 @@
             {
                 background-color: rgb(185, 13, 243);
                 color: white;
+                span
+                {
+                    color: white;
+                }
+            }
+            span
+            {
+                color: rgb(185, 13, 243);
             }
         }
         span

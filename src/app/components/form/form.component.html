@@ -18,6 +18,7 @@
         *Carrera: <input type="text" formControlName="carrera"/>
         <span *ngIf="errors.carrera">Ingresar la carrera es obligatorio</span>
         Cátedra: <input type="text" formControlName="catedra"/>
-        <button class="submit-button" type="submit">Enviar</button>
+        <button *ngIf="!loading" class="submit-button" type="submit">Enviar</button>
+        <button *ngIf="loading" class="submit-button" type="submit"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
     </form>
 </div>

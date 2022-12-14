@@ -5,8 +5,11 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HomeComponent } from './components/home/home.component';
-import { FormComponent } from './form/form.component';
+import { FormComponent } from './components/form/form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StudentsComponent } from './components/students/students.component';
+import { NamePipe } from './pipes/name/name.pipe';
+import { FontDirective } from './directives/font.directive';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     SidebarComponent,
     HomeComponent,
-    FormComponent
+    FormComponent,
+    StudentsComponent,
+    NamePipe,
+    FontDirective
   ],
   imports: [
     BrowserModule,
