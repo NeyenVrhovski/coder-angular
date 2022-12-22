@@ -11,4 +11,10 @@
           <li class="list-group-item">Deuda: <strong>{{student.debt | currency: 'USD'}}</strong></li>
         </ul>
     </div>
+    <table mat-table [dataSource]="students">
+      <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let stuedent"> {{student.firstname} </td>
+      </ng-container>
+    </table>
 </div>

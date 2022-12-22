@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StudentsComponent } from './components/students/students.component';
 import { NamePipe } from './pipes/name/name.pipe';
 import { FontDirective } from './directives/font.directive';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FontDirective } from './directives/font.directive';
     BrowserModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
