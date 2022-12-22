@@ -1,17 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { student } from 'src/app/interfaces/student';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss']
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit, OnDestroy {
 
   students: student[];
   clicked: number;
+  columnsToDisplay: Array<string>;
+  users: Array<any>;
+  $users: Observable<any>;
+  subscription: Subscription;
 
-  constructor() { 
+  constructor(
+    public _users: UserService
+  ) { 
+    this.columnsToDisplay = ['demo-id', 'demo-first_name', 'demo-last_name', 'demo-email'];
     this.students = [
       {
       firstname: "Victor",
@@ -68,7 +78,16 @@ export class StudentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subscription = this._users.getAll().subscribe((res)=> {
+      this.users = res;
+    });
 
+    this.$users = this._users.getAll();
+
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
 }

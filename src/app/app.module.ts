@@ -11,6 +11,7 @@ import { StudentsComponent } from './components/students/students.component';
 import { NamePipe } from './pipes/name/name.pipe';
 import { FontDirective } from './directives/font.directive';
 import { MatTableModule } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MatTableModule } from '@angular/material/table';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

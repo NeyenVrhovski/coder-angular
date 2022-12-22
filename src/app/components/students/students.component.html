@@ -1,5 +1,5 @@
 <div class="students-main-container">
-    <div *ngFor="let student of students; let i = index" (click)="clicked = i" class="card" style="width: 18rem;">
+    <!-- <div *ngFor="let student of students; let i = index" (click)="clicked = i" class="card" style="width: 18rem;">
         <div class="card-body">
           <h5 appFont size="20px" class="card-title">{{student.firstname + ' ' + student.lastname | name : clicked == i ? 'long' : 'short'}}</h5>
           <p class="card-text">{{student.grade}}</p>
@@ -10,11 +10,33 @@
           <li class="list-group-item">Nota Final: <span class="student-note" [ngStyle]="{'color': student.note >= 7 ? 'green' : 'red'}">{{student.note}}</span></li>
           <li class="list-group-item">Deuda: <strong>{{student.debt | currency: 'USD'}}</strong></li>
         </ul>
-    </div>
-    <table mat-table [dataSource]="students">
-      <ng-container matColumnDef="score">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let stuedent"> {{student.firstname} </td>
+    </div> -->
+    <table mat-table [dataSource]="$users | async" class="mat-elevation-z8 demo-table">
+      <!-- Position Column -->
+      <ng-container matColumnDef="demo-id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let user"> {{user.id}} </td>
       </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="demo-first_name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let user"> {{user.first_name}} </td>
+      </ng-container>
+    
+      <!-- Weight Column -->
+      <ng-container matColumnDef="demo-last_name">
+        <th mat-header-cell *matHeaderCellDef> Apellido </th>
+        <td mat-cell *matCellDef="let user"> {{user.last_name}} </td>
+      </ng-container>
+    
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="demo-email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
     </table>
 </div>
