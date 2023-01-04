@@ -1,0 +1,12 @@
+<div class="card" style="width: 18rem;">
+    <img (click)="removeTeacher()" src="/assets/icons/close-icon.png"/>
+    <div class="card-body">
+      <h5 (click)="clicked = !clicked" appFont size="20px" class="card-title">{{teacher.firstname + ' ' + teacher.lastname | name : clicked ? 'long' : 'short'}}</h5>
+      <p class="card-text">Profesor de {{teacher.course}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Documento: <strong>{{teacher.document}}</strong></li>
+      <li class="list-group-item">Fecha de admision: <strong>{{teacher.admissionDate}}</strong></li>
+      <li class="list-group-item">Salario actual: <strong>{{teacher.salary | currency: 'USD'}}</strong></li>
+    </ul>
+</div>
