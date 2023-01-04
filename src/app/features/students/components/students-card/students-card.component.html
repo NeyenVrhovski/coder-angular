@@ -1,0 +1,13 @@
+<div class="card" style="width: 18rem;">
+    <img (click)="removeStudent()" src="/assets/icons/close-icon.png"/>
+    <div class="card-body">
+      <h5 (click)="clicked = !clicked" appFont size="20px" class="card-title">{{student.firstname + ' ' + student.lastname | name : clicked ? 'long' : 'short'}}</h5>
+      <p class="card-text">{{student.grade}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Documento: <strong>{{student.document}}</strong></li>
+      <li class="list-group-item">Fecha de admision: <strong>{{student.admissionDate}}</strong></li>
+      <li class="list-group-item">Nota Final: <span class="student-note" [ngStyle]="{'color': student.note >= 7 ? 'green' : 'red'}">{{student.note}}</span></li>
+      <li class="list-group-item">Deuda: <strong>{{student.debt | currency: 'USD'}}</strong></li>
+    </ul>
+</div>

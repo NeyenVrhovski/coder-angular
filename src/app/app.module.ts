@@ -2,16 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { HomeComponent } from './components/home/home.component';
-import { FormComponent } from './components/form/form.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StudentsComponent } from './components/students/students.component';
-import { NamePipe } from './pipes/name/name.pipe';
-import { FontDirective } from './directives/font.directive';
-import { MatTableModule } from '@angular/material/table';
-import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './core/components/header/header.component';
+import { SidebarComponent } from './core/components/sidebar/sidebar.component';
+import { HomeComponent } from './core/pages/home/home.component';
+import { AppRoutingModule } from './app-routing.module';
+import { StudentsModule } from './features/students/students.module';
 
 @NgModule({
   declarations: [
@@ -19,18 +14,12 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     SidebarComponent,
     HomeComponent,
-    FormComponent,
-    StudentsComponent,
-    NamePipe,
-    FontDirective
   ],
   imports: [
     BrowserModule,
     NgbModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatTableModule,
-    HttpClientModule
+    AppRoutingModule,
+    StudentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

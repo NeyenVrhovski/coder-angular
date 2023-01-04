@@ -1,0 +1,4 @@
+<div class="students-main-container">
+    <app-card *ngFor="let student of students" style="width: 18rem;" [student]="student"></app-card>
+    <button [routerLink]="['/students/new']" class="new-button">Agregar Estudiante</button>
+</div>
