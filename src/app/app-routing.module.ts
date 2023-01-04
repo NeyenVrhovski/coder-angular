@@ -4,7 +4,8 @@ import { HomeComponent } from './core/pages/home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'students', loadChildren: () => import('./features/students/students.module').then(m => m.StudentsModule)}
+  { path: 'students', loadChildren: () => import('./features/students/students.module').then(m => m.StudentsModule)},
+  { path: 'teachers', loadChildren: () => import('./features/teachers/teachers.module').then(m => m.TeachersModule)}
 ];
 
 @NgModule({

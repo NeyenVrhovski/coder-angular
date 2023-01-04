@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { StudentsService } from 'src/app/services/students/students.service';
 import { student } from '../../../../shared/interfaces/student';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-card',
+  selector: 'app-students-card',
   templateUrl: './students-card.component.html',
   styleUrls: ['./students-card.component.scss']
 })
@@ -10,20 +12,30 @@ export class StudentsCardComponent {
 
   @Input() student: student;
   clicked: boolean;
-  students: student[];
   event: Event
 
-  constructor() {
+  constructor(
+    private _students: StudentsService
+  ) {
     this.clicked = false;
     this.event = new Event('studentsUpdate');
   }
 
   removeStudent()
   {
-    const students = JSON.parse(localStorage.getItem('students') || '');
-    const index = students.map((el: any) => el.document).indexOf(this.student.document);
-    students.splice(index, 1);
-    localStorage.setItem('students', JSON.stringify(students));
-    document.dispatchEvent(this.event);
+    Swal.fire({
+      title: 'Cuidado!',
+      text: 'Estas seguro de querer borrar este alumno?',
+      icon: 'warning',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
+    }).then((res) => {
+      if(res.isConfirmed)
+      {
+        this._students.removeStudent(this.student.document)
+        document.dispatchEvent(this.event);
+      }
+    });
   }
 }

@@ -7,6 +7,7 @@ import { SidebarComponent } from './core/components/sidebar/sidebar.component';
 import { HomeComponent } from './core/pages/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StudentsModule } from './features/students/students.module';
+import { TeachersModule } from './features/teachers/teachers.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { StudentsModule } from './features/students/students.module';
     NgbModule,
     AppRoutingModule,
     StudentsModule,
+    TeachersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

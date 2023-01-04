@@ -1,34 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StudentsService } from 'src/app/services/students/students.service';
-import { student } from 'src/app/shared/interfaces/student';
+import { TeachersService } from 'src/app/services/teachers/teachers.service';
+import { teacher } from 'src/app/shared/interfaces/teacher';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-students-form',
-  templateUrl: './students-form.component.html',
-  styleUrls: ['./students-form.component.scss']
+  selector: 'app-teachers-form',
+  templateUrl: './teachers-form.component.html',
+  styleUrls: ['./teachers-form.component.scss']
 })
-export class StudentsFormComponent implements OnInit {
-
+export class TeachersFormComponent implements OnInit {
   public form: FormGroup;
   public errors: {
     firstname: boolean,
     lastname: boolean,
     document: boolean,
-    email: boolean,
     admissionDate: boolean,
-    grade: boolean,
-    note: boolean,
-    debt: boolean
+    course: boolean,
+    salary: boolean
   };
 
-  students: student[];
+  teachers: teacher[];
   loading: boolean;
 
   constructor(
     private fb: FormBuilder,
-    private _student: StudentsService
+    private _teachers: TeachersService
   ) { 
     this.loading = false
     this.form = this.fb.group({
@@ -36,24 +33,21 @@ export class StudentsFormComponent implements OnInit {
       lastname: ['', Validators.required],
       document: ['', Validators.minLength(7)],
       admissionDate: ['', Validators.required],
-      grade: ['', Validators.required],
-      note: ['', [Validators.required, Validators.max(10), Validators.min(1)]],
-      debt: ['', Validators.min(0)]
+      course: ['', Validators.required],
+      salary: ['', Validators.min(0)]
     })
     this.errors = {
       firstname: false,
       lastname: false,
       document: false,
-      email: false,
       admissionDate: false,
-      grade: false,
-      note: false,
-      debt: false
+      course: false,
+      salary: false
     }
   }
 
   ngOnInit(): void {
-    this.students = JSON.parse(localStorage.getItem('students') || '');
+    this.teachers = JSON.parse(localStorage.getItem('teachers') || '');
   }
 
   handleSubmit()
@@ -62,11 +56,11 @@ export class StudentsFormComponent implements OnInit {
     {
       this.loading = true;
       setTimeout(() => {
-        this._student.addStudent(this.form.value);
+        this._teachers.addTeacher(this.form.value);
         this.loading = false;
         Swal.fire({
-          title: 'Alumno Ingresado!',
-          text: 'Ya se guardaron los datos del alumno.',
+          title: 'Profesor Ingresado!',
+          text: 'Ya se guardaron los datos del profesor.',
           icon: 'success',
           confirmButtonText: 'Cerrar'
         })
@@ -106,29 +100,21 @@ export class StudentsFormComponent implements OnInit {
       {
         this.errors.admissionDate = false
       }
-      if(this.form.get('grade')?.invalid)
+      if(this.form.get('salary')?.invalid)
       {
-        this.errors.grade = true;
+        this.errors.salary = true;
       }
       else
       {
-        this.errors.grade = false
+        this.errors.salary = false
       }
-      if(this.form.get('note')?.invalid)
+      if(this.form.get('course')?.invalid)
       {
-        this.errors.note = true;
-      }
-      else
-      {
-        this.errors.note = false
-      }
-      if(this.form.get('debt')?.invalid)
-      {
-        this.errors.debt = true;
+        this.errors.course = true;
       }
       else
       {
-        this.errors.debt = false
+        this.errors.course = false
       }
     }
   }

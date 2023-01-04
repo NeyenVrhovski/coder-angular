@@ -6,7 +6,6 @@ import { StudentsComponent } from './pages/students/students.component';
 import { StudentsFormComponent } from './pages/students-form/students-form.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StudentsCardComponent } from './components/students-card/students-card.component';
 
@@ -22,7 +21,6 @@ import { StudentsCardComponent } from './components/students-card/students-card.
     StudentsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTableModule,
     SharedModule
   ],
   exports: [

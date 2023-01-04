@@ -1,0 +1,18 @@
+<div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+        *Nombre: <input type="text" formControlName="firstname"/>
+        <span *ngIf="errors.firstname">Ingresar el nombre es obligatorio</span>
+        *Apellido: <input type="text" formControlName="lastname"/>
+        <span *ngIf="errors.lastname">Ingresar el apellido es obligatorio</span>
+        *DNI: <input type="text" formControlName="document"/>
+        <span *ngIf="errors.document">El DNI debe tener 7 o mas dígitos</span>
+        *Fecha de Admisión: <input type="date" formControlName="admissionDate"/>
+        <span *ngIf="errors.admissionDate">La fecha es inválida</span>
+        *Curso: <input type="text" formControlName="course"/>
+        <span *ngIf="errors.course">Ingresar el curso es obligatorio</span>
+        *Salario actual: <input type="number" formControlName="salary"/>
+        <span *ngIf="errors.salary">El salario debe ser mayor o igual a $0</span>
+        <button *ngIf="!loading" class="submit-button" type="submit">Enviar</button>
+        <button *ngIf="loading" class="submit-button" type="submit"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+    </form>
+</div>

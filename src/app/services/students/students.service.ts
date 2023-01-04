@@ -18,4 +18,19 @@ export class StudentsService {
     })
     return $students
   }
+
+  removeStudent(document: number): void
+  {
+    const students = JSON.parse(localStorage.getItem('students') || '');
+    const index = students.map((el: any) => el.document).indexOf(document);
+    students.splice(index, 1);
+    localStorage.setItem('students', JSON.stringify(students));
+  }
+
+  addStudent(student: student): void
+  {
+    const students = JSON.parse(localStorage.getItem('students') || '');
+    students.push(student);
+    localStorage.setItem('students', JSON.stringify(students));
+  }
 }

@@ -1,0 +1,4 @@
+<div class="teachers-main-container">
+    <app-teachers-card *ngFor="let teacher of teachers" style="width: 18rem;" [teacher]="teacher"></app-teachers-card>
+    <button [routerLink]="['/teachers/new']" class="new-button">Agregar Profesor</button>
+</div>
