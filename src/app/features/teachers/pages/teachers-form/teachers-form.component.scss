@@ -6,6 +6,27 @@
     justify-content: center;
     align-items: center;
     margin: 86px 0 0 12%;
+    position: relative;
+    .back-button
+    {
+        position: absolute;
+        top: 50px;
+        left: 5%;
+        border: none;
+        background-color: transparent;
+        color: rgb(185, 13, 243);
+        text-decoration: underline;
+        transition: all 400ms ease-in-out;
+        border-radius: 20px;
+        width: 100px;
+        height: 30px;
+        &:hover
+        {
+            color: white;
+            background-color: rgb(185, 13, 243);
+            text-decoration: none;
+        }
+    }
     form
     {
         width: auto;

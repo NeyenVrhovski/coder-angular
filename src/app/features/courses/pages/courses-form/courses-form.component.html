@@ -1,0 +1,21 @@
+<div class="form-container">
+    <button [routerLink]="['/courses']" class="back-button">Volver</button>
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+        *Nombre: <input type="text" formControlName="name"/>
+        <span *ngIf="errors.name">Ingresar el nombre es obligatorio</span>
+        *Profesor: <input type="text" formControlName="teacher"/>
+        <span *ngIf="errors.teacher">Ingresar el profesor es obligatorio</span>
+        *Precio: <input type="number" formControlName="price"/>
+        <span *ngIf="errors.price">El precio debe ser mayor o igual a 0</span>
+        *Formato: 
+        <select formControlName="format">
+            <option value="0">-- Seleccionar Formato --</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Virtual">Virtual</option>
+            <option value="Híbrido">Híbrido</option>
+        </select>
+        <span *ngIf="errors.format">Seleccionar el formato es obligatorio</span>
+        <button *ngIf="!loading" class="submit-button" type="submit">Enviar</button>
+        <button *ngIf="loading" class="submit-button" type="submit"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+    </form>
+</div>

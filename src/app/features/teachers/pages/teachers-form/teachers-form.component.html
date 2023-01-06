@@ -1,4 +1,5 @@
 <div class="form-container">
+    <button [routerLink]="['/teachers']" class="back-button">Volver</button>
     <form [formGroup]="form" (ngSubmit)="handleSubmit()">
         *Nombre: <input type="text" formControlName="firstname"/>
         <span *ngIf="errors.firstname">Ingresar el nombre es obligatorio</span>
