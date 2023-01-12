@@ -15,3 +15,38 @@
 {
     width: 60px;
 }
+
+.login-button
+{
+    border: none;
+    background-color: rgb(185, 13, 243);
+    color: white;
+    transition: 200ms all ease-in-out;
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+    margin: 0 40px 0 0;
+    &:hover
+    {
+        background-color: white;
+        color: rgb(185, 13, 243);
+        border: solid 2px rgb(185, 13, 243);
+    }
+}
+
+.logout-button
+{
+    border: none;
+    color: rgb(185, 13, 243);
+    text-decoration: underline;
+    background-color: transparent;
+    transition: 200ms all ease-in-out;
+    font-size: 18px;
+    margin: 0 40px 0 0;
+    border-radius: 10px;
+    &:hover
+    {
+        background-color: rgb(185, 13, 243);
+        color: white;
+    }
+}

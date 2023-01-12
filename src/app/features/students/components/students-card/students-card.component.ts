@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { StudentsService } from 'src/app/services/students/students.service';
 import { student } from '../../../../shared/interfaces/student';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-students-card',
@@ -12,7 +13,8 @@ export class StudentsCardComponent {
 
   @Input() student: student;
   clicked: boolean;
-  event: Event
+  event: Event;
+  subscription: Subscription
 
   constructor(
     private _students: StudentsService
@@ -33,8 +35,10 @@ export class StudentsCardComponent {
     }).then((res) => {
       if(res.isConfirmed)
       {
-        this._students.removeStudent(this.student.document)
-        document.dispatchEvent(this.event);
+        this.subscription?.unsubscribe();
+        this.subscription = this._students.removeStudent(this.student).subscribe((res) => {
+          document.dispatchEvent(this.event);
+        })
       }
     });
   }

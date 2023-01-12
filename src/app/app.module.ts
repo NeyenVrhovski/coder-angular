@@ -8,6 +8,9 @@ import { HomeComponent } from './core/pages/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StudentsModule } from './features/students/students.module';
 import { TeachersModule } from './features/teachers/teachers.module';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './core/components/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,13 +18,17 @@ import { TeachersModule } from './features/teachers/teachers.module';
     HeaderComponent,
     SidebarComponent,
     HomeComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     NgbModule,
     AppRoutingModule,
     StudentsModule,
-    TeachersModule
+    TeachersModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { StudentsService } from 'src/app/services/students/students.service';
 import { student } from 'src/app/shared/interfaces/student';
 import Swal from 'sweetalert2';
@@ -25,6 +26,7 @@ export class StudentsFormComponent implements OnInit {
 
   students: student[];
   loading: boolean;
+  subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -61,8 +63,8 @@ export class StudentsFormComponent implements OnInit {
     if(this.form.valid)
     {
       this.loading = true;
-      setTimeout(() => {
-        this._student.addStudent(this.form.value);
+      this.subscription?.unsubscribe();
+      this.subscription = this._student.addStudent(this.form.value).subscribe((res) => {
         this.loading = false;
         Swal.fire({
           title: 'Alumno Ingresado!',
@@ -70,7 +72,7 @@ export class StudentsFormComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Cerrar'
         })
-      },2000)
+      })
     }
     else
     {

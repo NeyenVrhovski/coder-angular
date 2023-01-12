@@ -1,4 +1,5 @@
 export interface student {
+    id: number,
     firstname: string,
     lastname: string,
     document: number,

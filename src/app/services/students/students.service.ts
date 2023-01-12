@@ -1,36 +1,36 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { student } from 'src/app/shared/interfaces/student';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
 
-  constructor( ) { 
+  constructor(
+    private http: HttpClient
+   ) { 
 
+  }
+
+  private getHeadersOptions(): HttpHeaders
+  {
+    return new HttpHeaders({'content-type' : 'application/json'})
   }
 
   getAll(): Observable<any>{
-    const students: student[] = JSON.parse(localStorage.getItem('students') || '')
-    const $students = new Observable(obs => {
-      obs.next(students)
-    })
-    return $students
+    return this.http.get<student[]>(`${environment.baseURL}/students`, {headers: this.getHeadersOptions()})
   }
 
-  removeStudent(document: number): void
+  removeStudent(student: student): Observable<any>
   {
-    const students = JSON.parse(localStorage.getItem('students') || '');
-    const index = students.map((el: any) => el.document).indexOf(document);
-    students.splice(index, 1);
-    localStorage.setItem('students', JSON.stringify(students));
+    return this.http.delete(`${environment.baseURL}/students/${student.id}`, {headers: this.getHeadersOptions()})
   }
 
-  addStudent(student: student): void
+  addStudent(student: student): Observable<any>
   {
-    const students = JSON.parse(localStorage.getItem('students') || '');
-    students.push(student);
-    localStorage.setItem('students', JSON.stringify(students));
+    return this.http.post(`${environment.baseURL}/students`, student, {headers: this.getHeadersOptions()})
   }
 }

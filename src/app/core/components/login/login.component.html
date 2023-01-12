@@ -1,0 +1,11 @@
+<div class="form-container">
+    <button [routerLink]="['']" class="back-button">Volver</button>
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+        *Email: <input type="text" formControlName="email"/>
+        <span *ngIf="errors.email">Ingresar el email es obligatorio</span>
+        *Contraseña: <input type="password" formControlName="password">
+        <span *ngIf="errors.password">Ingresar la contraseña es obligatorio </span>
+        <button *ngIf="!loading" class="submit-button" type="submit">Enviar</button>
+        <button *ngIf="loading" class="submit-button" type="submit"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+    </form>
+</div>
