@@ -10,7 +10,14 @@ export class TeachersService {
   constructor() { }
 
   getAll(): Observable<any>{
-    const teachers: teacher[] = JSON.parse(localStorage.getItem('teachers') || '')
+    let teachers: teacher[];
+    if(localStorage.getItem('teachers'))
+    {
+      teachers = JSON.parse(localStorage.getItem('teachers') || '');
+    }else 
+    {
+      teachers = [];
+    }
     const $teachers = new Observable(obs => {
       obs.next(teachers)
     })
