@@ -11,6 +11,7 @@ import { TeachersModule } from './features/teachers/teachers.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './core/components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppStoreModule } from './app-store.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TeachersModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppStoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

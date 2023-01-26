@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { StudentsService } from 'src/app/services/students/students.service';
 import { student } from 'src/app/shared/interfaces/student';
 import Swal from 'sweetalert2';
+import { createStudent } from '../../store/students.actions';
+import { createSuccess } from '../../store/students.selectors';
 
 @Component({
   selector: 'app-students-form',
@@ -30,7 +33,8 @@ export class StudentsFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private _student: StudentsService
+    private _student: StudentsService,
+    private store: Store
   ) { 
     this.loading = false
     this.form = this.fb.group({
@@ -55,7 +59,7 @@ export class StudentsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.students = JSON.parse(localStorage.getItem('students') || '');
+
   }
 
   handleSubmit() 
@@ -64,14 +68,18 @@ export class StudentsFormComponent implements OnInit {
     {
       this.loading = true;
       this.subscription?.unsubscribe();
-      this.subscription = this._student.addStudent(this.form.value).subscribe((res) => {
-        this.loading = false;
-        Swal.fire({
-          title: 'Alumno Ingresado!',
-          text: 'Ya se guardaron los datos del alumno.',
-          icon: 'success',
-          confirmButtonText: 'Cerrar'
-        })
+      this.store.dispatch(createStudent({student: this.form.value}));
+      this.subscription = this.store.select(createSuccess).subscribe((res) => {
+        if(res !== null)
+        {
+          this.loading = res;
+          Swal.fire({
+            title: 'Alumno Ingresado!',
+            text: 'Ya se guardaron los datos del alumno.',
+            icon: 'success',
+            confirmButtonText: 'Cerrar'
+          })
+        }
       })
     }
     else

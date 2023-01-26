@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { TeachersService } from 'src/app/services/teachers/teachers.service';
 import { teacher } from 'src/app/shared/interfaces/teacher';
+import { createSuccess } from '../../store/teachers.selectors';
 import Swal from 'sweetalert2';
+import { createTeacher } from '../../store/teachers.actions';
 
 @Component({
   selector: 'app-teachers-form',
@@ -27,7 +30,8 @@ export class TeachersFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private _teachers: TeachersService
+    private _teachers: TeachersService,
+    private store: Store
   ) { 
     this.loading = false
     this.form = this.fb.group({
@@ -49,7 +53,7 @@ export class TeachersFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.teachers = JSON.parse(localStorage.getItem('teachers') || '');
+   
   }
 
   handleSubmit()
@@ -58,14 +62,18 @@ export class TeachersFormComponent implements OnInit {
     {
       this.loading = true;
       this.subscription?.unsubscribe();
-      this.subscription = this._teachers.addTeacher(this.form.value).subscribe((res) => {
-        this.loading = false;
-        Swal.fire({
-          title: 'Profesor Ingresado!',
-          text: 'Ya se guardaron los datos del profesor.',
-          icon: 'success',
-          confirmButtonText: 'Cerrar'
-        })
+      this.store.dispatch(createTeacher({teacher: this.form.value}));
+      this.subscription = this.store.select(createSuccess).subscribe((res) => {
+        if(res !== null)
+        {
+          this.loading = false;
+          Swal.fire({
+            title: 'Profesor Ingresado!',
+            text: 'Ya se guardaron los datos del profesor.',
+            icon: 'success',
+            confirmButtonText: 'Cerrar'
+          })
+        }
       })
     }
     else

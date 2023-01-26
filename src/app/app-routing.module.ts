@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'students', loadChildren: () => import('./features/students/students.module').then(m => m.StudentsModule), canActivate: [AuthGuard]},
   { path: 'teachers', loadChildren: () => import('./features/teachers/teachers.module').then(m => m.TeachersModule), canActivate: [AuthGuard]},
-  { path: 'courses', loadChildren: () => import('./features/courses/courses.module').then(m => m.CoursesModule), canActivate: [AuthGuard]}
+  { path: 'courses', loadChildren: () => import('./features/courses/courses.module').then(m => m.CoursesModule), canActivate: [AuthGuard]},
+  { path: '**', component: HomeComponent}
 ];
 
 @NgModule({

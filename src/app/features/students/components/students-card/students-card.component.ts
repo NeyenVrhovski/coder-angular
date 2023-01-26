@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { StudentsService } from 'src/app/services/students/students.service';
 import { student } from '../../../../shared/interfaces/student';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
-
+import { Store } from '@ngrx/store';
+import { removeStudent } from '../../store/students.actions';
 @Component({
   selector: 'app-students-card',
   templateUrl: './students-card.component.html',
@@ -13,14 +13,12 @@ export class StudentsCardComponent {
 
   @Input() student: student;
   clicked: boolean;
-  event: Event;
   subscription: Subscription
 
   constructor(
-    private _students: StudentsService
+    private store: Store
   ) {
     this.clicked = false;
-    this.event = new Event('studentsUpdate');
   }
 
   removeStudent()
@@ -35,10 +33,7 @@ export class StudentsCardComponent {
     }).then((res) => {
       if(res.isConfirmed)
       {
-        this.subscription?.unsubscribe();
-        this.subscription = this._students.removeStudent(this.student).subscribe((res) => {
-          document.dispatchEvent(this.event);
-        })
+        this.store.dispatch(removeStudent({student: this.student}))
       }
     });
   }

@@ -21,7 +21,7 @@ import { StudentsCardComponent } from './components/students-card/students-card.
     StudentsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
   exports: [
     StudentsComponent,

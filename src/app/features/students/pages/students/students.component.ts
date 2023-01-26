@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { student } from 'src/app/shared/interfaces/student';
 import { StudentsService } from 'src/app/services/students/students.service';
+import { Store } from '@ngrx/store';
+import { loadStudents, cleanStudents } from '../../store/students.actions';
+import { selectStudentsArray } from '../../store/students.selectors';
 
 @Component({
   selector: 'app-students',
@@ -15,28 +18,21 @@ export class StudentsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    private _students: StudentsService
+    private store: Store
   ) { 
     
   }
 
   ngOnInit(): void {
-    this.setStudents();
-    document.addEventListener('studentsUpdate', () => {
-      this.setStudents();
+    this.store.dispatch(loadStudents());
+    this.subscription = this.store.select(selectStudentsArray).subscribe((res) => {
+      this.students = res;
     })
   }
 
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
-  }
-
-  setStudents()
-  {
-    this.subscription?.unsubscribe();
-    this.subscription = this._students.getAll().subscribe((res)=> {
-      this.students = res
-    });
+    this.store.dispatch(cleanStudents())
   }
 
 }

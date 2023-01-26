@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Input } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { TeachersService } from 'src/app/services/teachers/teachers.service';
 import { teacher } from 'src/app/shared/interfaces/teacher';
 import Swal from 'sweetalert2';
+import { removeTeacher } from '../../store/teachers.actions';
 
 
 @Component({
@@ -15,14 +16,12 @@ export class TeachersCardComponent {
   @Input() teacher: teacher;
   clicked: boolean;
   teachers: teacher[];
-  event: Event;
   subscription: Subscription;
 
   constructor(
-    private _teachers: TeachersService
+    private store: Store
   ) {
     this.clicked = false;
-    this.event = new Event('teachersUpdate');
   }
 
   removeTeacher()
@@ -35,13 +34,9 @@ export class TeachersCardComponent {
       cancelButtonText: 'Cancelar',
       showCancelButton: true
     }).then((res) => {
-      console.log(res)
       if(res.isConfirmed)
       {
-        this.subscription?.unsubscribe();
-        this.subscription = this._teachers.removeTeacher(this.teacher).subscribe((res) => {
-          document.dispatchEvent(this.event);
-        })
+        this.store.dispatch(removeTeacher({teacher: this.teacher}))
       }
     })
   }

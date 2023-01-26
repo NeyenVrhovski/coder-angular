@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { teacher } from 'src/app/shared/interfaces/teacher';
 import { Subscription } from 'rxjs';
-import { TeachersService } from 'src/app/services/teachers/teachers.service';
+import { Store } from '@ngrx/store';
+import { cleanTeachers, loadTeachers } from '../../store/teachers.actions';
+import { selectTeachersArray } from '../../store/teachers.selectors';
 
 @Component({
   selector: 'app-teachers',
@@ -15,28 +17,21 @@ export class TeachersComponent {
   subscription: Subscription;
 
   constructor(
-    private _teachers: TeachersService
+    private store: Store
   ) { 
     
   }
 
   ngOnInit(): void {
-    this.setTeachers();
-    document.addEventListener('teachersUpdate', () => {
-      this.setTeachers();
+    this.store.dispatch(loadTeachers());
+    this.subscription = this.store.select(selectTeachersArray).subscribe((res) => {
+      this.teachers = res;
     })
   }
 
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
-  }
-
-  setTeachers()
-  {
-    this.subscription?.unsubscribe();
-    this.subscription = this._teachers.getAll().subscribe((res)=> {
-      this.teachers = res;
-    });
+    this.store.dispatch(cleanTeachers());
   }
 
 }
