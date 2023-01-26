@@ -1,41 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { teacher } from 'src/app/shared/interfaces/teacher';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeachersService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+   ) { 
+
+  }
+
+  private getHeadersOptions(): HttpHeaders
+  {
+    return new HttpHeaders({'content-type' : 'application/json'})
+  }
 
   getAll(): Observable<any>{
-    let teachers: teacher[];
-    if(localStorage.getItem('teachers'))
-    {
-      teachers = JSON.parse(localStorage.getItem('teachers') || '');
-    }else 
-    {
-      teachers = [];
-    }
-    const $teachers = new Observable(obs => {
-      obs.next(teachers)
-    })
-    return $teachers
+    return this.http.get<teacher[]>(`${environment.baseURL}/teachers`, {headers: this.getHeadersOptions()})
   }
 
-  removeTeacher(document: number): void
+  removeTeacher(teacher: teacher): Observable<any>
   {
-    const teachers = JSON.parse(localStorage.getItem('teachers') || '');
-    const index = teachers.map((el: any) => el.document).indexOf(document);
-    teachers.splice(index, 1);
-    localStorage.setItem('teachers', JSON.stringify(teachers));
+    return this.http.delete(`${environment.baseURL}/teachers/${teacher.id}`, {headers: this.getHeadersOptions()})
   }
 
-  addTeacher(teacher: teacher): void
+  addTeacher(teacher: teacher): Observable<any>
   {
-    const teachers = JSON.parse(localStorage.getItem('teachers') || '');
-    teachers.push(teacher);
-    localStorage.setItem('teachers', JSON.stringify(teachers));
+    return this.http.post(`${environment.baseURL}/teachers`, teacher, {headers: this.getHeadersOptions()})
   }
 }

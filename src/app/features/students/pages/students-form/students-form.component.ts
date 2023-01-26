@@ -58,7 +58,7 @@ export class StudentsFormComponent implements OnInit {
     this.students = JSON.parse(localStorage.getItem('students') || '');
   }
 
-  handleSubmit()
+  handleSubmit() 
   {
     if(this.form.valid)
     {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { TeachersService } from 'src/app/services/teachers/teachers.service';
 import { teacher } from 'src/app/shared/interfaces/teacher';
 import Swal from 'sweetalert2';
@@ -22,6 +23,7 @@ export class TeachersFormComponent implements OnInit {
 
   teachers: teacher[];
   loading: boolean;
+  subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -55,8 +57,8 @@ export class TeachersFormComponent implements OnInit {
     if(this.form.valid)
     {
       this.loading = true;
-      setTimeout(() => {
-        this._teachers.addTeacher(this.form.value);
+      this.subscription?.unsubscribe();
+      this.subscription = this._teachers.addTeacher(this.form.value).subscribe((res) => {
         this.loading = false;
         Swal.fire({
           title: 'Profesor Ingresado!',
@@ -64,7 +66,7 @@ export class TeachersFormComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Cerrar'
         })
-      },2000)
+      })
     }
     else
     {
