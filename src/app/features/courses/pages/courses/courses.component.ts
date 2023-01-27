@@ -3,7 +3,9 @@ import { course } from 'src/app/shared/interfaces/course';
 import { Subscription } from 'rxjs';
 import { CoursesService } from 'src/app/services/courses/courses.service';
 import Swal from 'sweetalert2';
-import { CanUpdateErrorState } from '@angular/material/core';
+import { Store } from '@ngrx/store';
+import { cleanCourses, loadCourses, removeCourse } from '../../store/courses.actions';
+import { selectCoursesArray } from '../../store/courses.selectors';
 
 @Component({
   selector: 'app-courses',
@@ -17,28 +19,22 @@ export class CoursesComponent {
   columns = ['name', 'teacher', 'price', 'format', 'delete'];
 
   constructor(
-    private _courses: CoursesService
+    private _courses: CoursesService,
+    private store: Store
   ) { 
     this.event = new Event('studentsUpdate');
   }
 
   ngOnInit(): void {
-    this.setCourses();
-    document.addEventListener('coursesUpdate', () => {
-      this.setCourses();
+    this.store.dispatch(loadCourses());
+    this.subscription = this.store.select(selectCoursesArray).subscribe((res) => {
+      this.courses = res;
     })
   }
 
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
-  }
-
-  setCourses()
-  {
-    this.subscription?.unsubscribe();
-    this.subscription = this._courses.getAll().subscribe((res)=> {
-      this.courses = res;
-    });
+    this.store.dispatch(cleanCourses());
   }
 
   removeCourse(course: course)
@@ -53,8 +49,7 @@ export class CoursesComponent {
     }).then((res) => {
       if(res.isConfirmed)
       {
-        this._courses.removeCourse(course.name)
-        this.setCourses();
+        this.store.dispatch(removeCourse({course: course}))
       }
     });
   }

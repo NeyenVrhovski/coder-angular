@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CoursesService } from 'src/app/services/courses/courses.service';
+import { Subscription } from 'rxjs';
 import { course } from 'src/app/shared/interfaces/course';
 import Swal from 'sweetalert2';
+import { createCourse } from '../../store/courses.actions';
+import { Store } from '@ngrx/store';
+import { createSuccess } from '../../store/courses.selectors';
 
 @Component({
   selector: 'app-courses-form',
   templateUrl: './courses-form.component.html',
   styleUrls: ['./courses-form.component.scss']
 })
-export class CoursesFormComponent {
+export class CoursesFormComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public errors: {
     name: boolean,
@@ -20,10 +23,11 @@ export class CoursesFormComponent {
 
   courses: course[];
   loading: boolean;
+  subscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
-    private _courses: CoursesService
+    private store: Store
   ) { 
     this.loading = false
     this.form = this.fb.group({
@@ -41,7 +45,11 @@ export class CoursesFormComponent {
   }
 
   ngOnInit(): void {
-    this.courses = JSON.parse(localStorage.getItem('courses') || '');
+    
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   handleSubmit()
@@ -50,16 +58,20 @@ export class CoursesFormComponent {
     if(this.form.valid)
     {
       this.loading = true;
-      setTimeout(() => {
-        this._courses.addCourse(this.form.value);
-        this.loading = false;
-        Swal.fire({
-          title: 'Curso Ingresado!',
-          text: 'Ya se guardaron los datos del curso.',
-          icon: 'success',
-          confirmButtonText: 'Cerrar'
-        })
-      },2000)
+      this.subscription?.unsubscribe();
+      this.store.dispatch(createCourse({course: this.form.value}));
+      this.subscription = this.store.select(createSuccess).subscribe((res) => {
+        if(res !== null)
+        {
+          this.loading = res;
+          Swal.fire({
+            title: 'Curso Ingresado!',
+            text: 'Ya se guardaron los datos del curso.',
+            icon: 'success',
+            confirmButtonText: 'Cerrar'
+          })
+        }
+      })
     }
     else
     {
