@@ -7,9 +7,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  loggedIn: boolean;
+
+  constructor() {
+    this.loggedIn = false;
+   }
 
   ngOnInit(): void {
+    if(localStorage.getItem('user'))
+    {
+      this.loggedIn = true;
+    }
+    else
+    {
+      this.loggedIn = false;
+    }
+    document.addEventListener('login', () => {
+      this.loggedIn = true
+    })
+    document.addEventListener('logout', () => {
+      this.loggedIn = false
+    })
   }
 
 }
